@@ -36,11 +36,11 @@ for(i in 1:iteracoes){
   better_fitness_vector[i] = new_data$fitness[which.min(new_data$fitness)]
   row.names(new_data) = 1:nrow(new_data)
   old_data = new_data
-  plot(main=paste("Iteration: ",i,"Fitness: ",better_fitness_vector[length(better_fitness_vector)]),better_fitness_vector,type="l",ylab="Fitness",xlab="Iteration")
+#   plot(main=paste("Iteration: ",i,"Fitness: ",better_fitness_vector[length(better_fitness_vector)]),better_fitness_vector,type="l",ylab="Fitness",xlab="Iteration")
   
-  if(better_fitness_vector[i]==0){
-    break
-  }
+#   if(better_fitness_vector[i]==0){
+#     break
+#   }
 }
 
 # configurations = paste("SELECTION:",type_selection,
