@@ -48,7 +48,7 @@ for(i in 1:iteracoes){
 #                        "MUTATION:",type_mutation ,
 #                        "OFFSPRING:",type_offspring)
 
-result = data.frame(fitness = better_fitness_vector)
-colnames(result) = experiment
+result = data.frame(experiment = experiment,fitness = better_fitness_vector[which.min(better_fitness_vector)])
+# colnames(result) = experiment
 
 # write.table(result,file=paste("configurations",".csv",sep=""))
