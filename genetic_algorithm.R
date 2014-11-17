@@ -37,7 +37,7 @@ for(i in 1:iteracoes){
   print(paste("Iteracao: ",i," Menor fitness:",  better_fitness_vector[i]))
   row.names(new_data) = 1:nrow(new_data)
   old_data = new_data
-  #       plot(main=paste("Iteration: ",i,"Fitness: ",better_fitness_vector[length(better_fitness_vector)]),better_fitness_vector,type="l",ylab="Fitness",xlab="Iteration")
+        plot(main=paste("Iteration: ",i,"Fitness: ",better_fitness_vector[length(better_fitness_vector)]),better_fitness_vector,type="l",ylab="Fitness",xlab="Iteration")
   #   print(new_data)
   #   print(new_data[which.min(new_data$fitness)])
   if(better_fitness_vector[i]==0){
