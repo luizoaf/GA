@@ -1,5 +1,5 @@
 start.time <- Sys.time()
-
+require("foreach")
 source("functions.R")
 sphere_min = -100
 sphere_max = 100
@@ -48,9 +48,20 @@ type_function ="sphere"
 # type_offspring = "random"
 # type_offspring = "tournament"
 all_fitness = data.frame()
+# execute_algorithm = function(){
+#   fitness_df = data.frame()
+#   for(i in 1:30){
+#     print(paste(experiment,"Iteracao: ",i))
+#     print(fitness_df)
+#     source("genetic_algorithm.R")
+#     fitness_df = rbind(fitness_df,result)
+#   }
+#   return(fitness_df)
+#   
+# }
 execute_algorithm = function(){
   fitness_df = data.frame()
-  for(i in 1:1){
+  foreach(i=1:30) %dopar% {
     print(paste(experiment,"Iteracao: ",i))
     print(fitness_df)
     source("genetic_algorithm.R")
@@ -60,64 +71,67 @@ execute_algorithm = function(){
   
 }
 
+
+
 # Experiment I
 experiment = "Experiment I"
 type_selection = "roulette"
 type_crossing = "one"
 type_mutation="gaussian" 
 type_offspring = "tournament"
+experiment = paste(experiment,type_selection,type_crossing,type_mutation,type_offspring)
 all_fitness = rbind(all_fitness,execute_algorithm())
-
+all_fitness$experiment = experiment
 end.time <- Sys.time()
 time.taken <- end.time - start.time
-time.taken
-
-
-start.time <- Sys.time()
-# Experiment II
-experiment = "Experiment II"
-
-type_selection = "roulette"
-type_crossing = "one"
-type_mutation="gaussian" 
-type_offspring = "tournament"
-all_fitness = rbind(all_fitness,execute_algorithm())
-
-end.time <- Sys.time()
-time.taken <- end.time - start.time
-time.taken
-
-# Experiment III
-experiment = "Experiment III"
-type_selection = "elitism"
-type_crossing = "two"
-type_mutation="gaussian" 
-type_offspring = "tournament"
-
-
-all_fitness = rbind(all_fitness,execute_algorithm())
-
-# Experiment IV
-experiment = "Experiment IV"
-type_selection = "elitism"
-type_crossing = "one"
-type_mutation="uniform" 
-type_offspring = "tournament"
-
-all_fitness = rbind(all_fitness,execute_algorithm())
-
-# Experiment IV
-experiment = "Experiment V"
-type_selection = "elitism"
-type_crossing = "one"
-type_mutation="gaussian" 
-type_offspring = "random"
-all_fitness = rbind(all_fitness,execute_algorithm())
-
+write.table(all_fitness,file="Experimento_1_rogerio.csv",sep=";",row.names=F)
+# time.taken
 # 
-# all_fitness = all_fitness[,-1]
-# plot(all_fitness[,1],main="Experiments",type="l",ylab="Fitness",xlab="Iteration",ylim=c(0,max(all_fitness)))
-# lines(all_fitness[,2],col="red")
-# lines(all_fitness[,3],col="blue")
-# lines(all_fitness[,4],col="green")
+# start.time <- Sys.time()
+# # Experiment II
+# experiment = "Experiment II"
+# 
+# type_selection = "roulette"
+# type_crossing = "one"
+# type_mutation="uniform" 
+# type_offspring = "random"
+# all_fitness = rbind(all_fitness,execute_algorithm())
+# 
+# end.time <- Sys.time()
+# time.taken <- end.time - start.time
+# time.taken
+# 
+# # Experiment III
+# experiment = "Experiment III"
+# type_selection = "elitism"
+# type_crossing = "two"
+# type_mutation="gaussian" 
+# type_offspring = "tournament"
+# 
+# 
+# all_fitness = rbind(all_fitness,execute_algorithm())
+# 
+# # Experiment IV
+# experiment = "Experiment IV"
+# type_selection = "elitism"
+# type_crossing = "one"
+# type_mutation="uniform" 
+# type_offspring = "tournament"
+# 
+# all_fitness = rbind(all_fitness,execute_algorithm())
+# 
+# # Experiment IV
+# experiment = "Experiment V"
+# type_selection = "elitism"
+# type_crossing = "one"
+# type_mutation="gaussian" 
+# type_offspring = "random"
+# all_fitness = rbind(all_fitness,execute_algorithm())
+# 
+# # 
+# # all_fitness = all_fitness[,-1]
+# # plot(all_fitness[,1],main="Experiments",type="l",ylab="Fitness",xlab="Iteration",ylim=c(0,max(all_fitness)))
+# # lines(all_fitness[,2],col="red")
+# # lines(all_fitness[,3],col="blue")
+# # lines(all_fitness[,4],col="green")
 

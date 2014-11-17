@@ -63,60 +63,19 @@ fitness = function(data,type){
 }
 
 selection_roulette = function(data,elements_number_for_next_iteration){
-#   row.names(data) = 1:nrow(data)
   data_roulette = data.frame()
-  #   for(i in 1:elements_number_for_next_iteration){
   sum_fitness = sum(data$fitness)
-  prop_random_numbers = sample(seq(0,sum_fitness,by = 1),size=1,replace=F)/sum_fitness
-  
   probabilities = (data$fitness/sum_fitness)
   probabilities_inverse = sum(1/probabilities)
   probabilities = (1/probabilities)/probabilities_inverse 
   probabilities_cum_sum = cumsum(probabilities)
   
-  #     index_min = which.min(probabilities_cum_sum < prop_random_numbers)
   indexs = sample(length(probabilities),prob=probabilities,size=3,replace=F)
   data_roulette = rbind(data_roulette,data[indexs,])
   
-  #     data = data[-c(index_min),]
-  #   }
   return(data_roulette)
 }
 
-
-# # elements_number_for_next_iteration = 3
-# selection_roulette = function(data,elements_number_for_next_iteration){
-#   sum_fitness = sum(data$fitness)
-#   prop_random_numbers = sample(seq(0,sum_fitness,by = 1),size=elements_number_for_next_iteration,replace=F)/sum_fitness
-#   
-#   probabilities = (data$fitness/sum_fitness)
-#   #   sum(probabilities)
-#   probabilities_inverse = sum(1/probabilities)
-#   probabilities = (1/probabilities)/probabilities_inverse 
-#   #   sum(probabilities)
-#   probabilities_cum_sum = cumsum(probabilities)
-#   
-#   data_roulette = data.frame()
-#   for(i in 1:length(prop_random_numbers)){
-#     index_min = which.min(probabilities_cum_sum < prop_random_numbers[i])
-#     data_roulette = rbind(data_roulette,data[index_min,])
-# #     data = data[-c(index_min),]
-#   }
-#   return(data_roulette)
-# }
-
-# selection_roulette = function(data,elements_number_for_next_iteration){
-#   sum_fitness = sum(data$fitness)
-#   random_numbers = sample(seq(0,sum_fitness,by = sphere_by),size=elements_number_for_next_iteration)
-#   data_roulette = data.frame()
-#   for(i in 1:length(random_numbers)){
-#     index_min = which.min(cumsum(data$fitness) < random_numbers[i])
-#     data_roulette = rbind(data_roulette,data[index_min,])
-#     data = data[-c(index_min),]
-#     sum_fitness = sum(data$fitness)
-#   }
-#   return(data_roulette)
-# }
 
 selection_elitism = function(data,elements_number_for_next_iteration){
   data_elitism = data[order(data$fitness,decreasing=F)[1:elements_number_for_next_iteration],]
