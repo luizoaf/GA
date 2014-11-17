@@ -20,23 +20,23 @@ taxa_cruzamento = 0.9
 elitismo = 0.1
 
 # DATA
-type_function ="sphere"
-data = read.csv("sphere.csv",sep=";")
+# type_function ="sphere"
+# data = read.csv("sphere.csv",sep=";")
 
 
-# type_function ="rastrigin"
-# data = read.csv("rastrigin.csv",sep=";")
+type_function ="rastrigin"
+data = read.csv("rastrigin.csv",sep=";")
 
 execute_algorithm = function(){
   fitness_df = data.frame()
-  #   foreach(i=1:1) %dopar% {
-  i=1
-  print(paste(experiment,"Iteracao: ",i))
-  print(fitness_df)
-  source("genetic_algorithm.R")
-  fitness_df = rbind(fitness_df,result)
-  #     experiments[i] = rep(paste(experiment,1),each=10)
-  #   }
+  foreach(i=1:15) %dopar% {
+    #   i=1
+    print(paste(experiment,"Iteracao: ",i))
+    print(fitness_df)
+    source("genetic_algorithm.R")
+    fitness_df = rbind(fitness_df,result)
+    #       experiments[i] = rep(paste(experiment,1),each=10)
+  }
   return(fitness_df)
 }
 
