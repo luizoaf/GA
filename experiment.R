@@ -78,15 +78,16 @@ execute_algorithm = function(){
 experiment = "Experiment I"
 type_selection = "elitism" # rogerio "roulette" 24.6 min
 type_crossing = "one"
-type_mutation="uniform" 
-type_offspring = "random"
+type_mutation="gaussian" 
+type_offspring = "tournament"
 experiment = paste(experiment,type_selection,type_crossing,type_mutation,type_offspring)
 all_fitness = rbind(all_fitness,execute_algorithm())
 # all_fitness$experiment = experiment
 end.time <- Sys.time()
 time.taken <- end.time - start.time
 time.taken
-# write.table(all_fitness,file="Experimento_1_rogerio.csv",sep=";",row.names=F)
+# plot(all_fitness$fitness,type="l",ylab="Fitness",xlab="Iteration")
+write.table(all_fitness,file="Experimento_1.csv",sep=";",row.names=F)
 # time.taken
 # 
 # start.time <- Sys.time()
