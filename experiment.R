@@ -84,6 +84,7 @@ all_fitness = rbind(all_fitness,execute_algorithm())
 all_fitness$experiment = experiment
 end.time <- Sys.time()
 time.taken <- end.time - start.time
+time.taken
 write.table(all_fitness,file="Experimento_1_rogerio.csv",sep=";",row.names=F)
 # time.taken
 # 
