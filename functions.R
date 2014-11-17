@@ -47,19 +47,19 @@ define_dimensions = function(total_indivíduos,dimensions,limite_inferior,limite_
 
 fitness = function(data,type){
   if(type == "sphere"){
-    type_function = function(vector){
+    type_function_fitness = function(vector){
       return(sum(vector^2))
     }
   }
   if (type == "rastrigin"){
-    type_function = function(vector){
+    type_function_fitness = function(vector){
       elements_number <- length(vector)
       sum <- sum(vector^2 - 10*cos(2*pi*vector))
       result <- 10*elements_number + sum
       return(result)
     }
   }
-  return(apply(data,MARGIN=1,FUN=type_function))
+  return(apply(data,MARGIN=1,FUN=type_function_fitness))
 }
 
 selection_roulette = function(data,elements_number_for_next_iteration){
@@ -83,6 +83,55 @@ selection_elitism = function(data,elements_number_for_next_iteration){
 }
 
 crossing_one_point = function(data,type,new_pairs_of_individuals){
+  #   data = old_data
+  #   start.time <- Sys.time()
+  #   new_pairs_of_individuals =10
+  #   type = "sphere"
+  #   one_point_crossing_sons = data.frame()
+  #   i = 1
+  #   while(i<=new_pairs_of_individuals){
+  #     random_number = runif(1,min = 0, max = 1)
+  #     if(random_number <= taxa_cruzamento){
+  #       
+  #       indexs = sample(1:nrow(data),size=new_pairs_of_individuals,replace=F)
+  #       fitness = data.frame(matrix(indexs,nrow=iterations/2,ncol=2))
+  #       
+  # #       point_crossing = sample(1:dimensions,size=1,replace=F)
+  # #       indexs = sample(seq(1,dimensions,by=1),size=new_pairs_of_individuals*2,replace=F,prob=rep(0.9, each = new_pairs_of_individuals*2))
+  #       
+  #       
+  #       better_individuals = data.frame()
+  #       indexs = sample(seq(1,dimensions,by=1),size=iterations,replace=F)
+  #       fitness = data.frame(matrix(indexs,nrow=iterations/2,ncol=2))
+  #       fitness$col1 = data$fitness[fitness[,1]]
+  #       fitness$col2 = data$fitness[fitness[,2]]
+  #       better_individuals = data[ifelse((fitness$col1 - fitness$col2) > 0,fitness[,2],fitness[,1]),]
+  #       
+  #       
+  #       point_crossing = point_crossing[order(point_crossing,decreasing=F)]
+  #       elements_for_crossing = sample(1:nrow(data),size=2,replace=F)
+  #       vector_1 = 1:point_crossing[1]
+  #       vector_2 = (point_crossing[1]+1):(ncol(data)-1) # -1 = remove col fitness
+  #       
+  #       parent_1_part_1 = as.vector(data[elements_for_crossing[1],][vector_1])
+  #       parent_2_part_1 = as.vector(data[elements_for_crossing[2],][vector_2])
+  #       
+  #       parent_1_part_2 = as.vector(data[elements_for_crossing[1],][vector_2])
+  #       parent_2_part_2 = as.vector(data[elements_for_crossing[2],][vector_1])
+  #       
+  #       son_1 = cbind(parent_1_part_1,parent_2_part_1)
+  #       son_1$fitness = fitness(son_1,type)
+  #       son_2 =  cbind(parent_1_part_2,parent_2_part_2)
+  #       son_2$fitness = fitness(son_2,type)
+  #       one_point_crossing_sons = rbind(one_point_crossing_sons,rbind(son_1,son_2))
+  #       i = i + 1
+  #     }
+  #   }
+  #   
+  #   end.time <- Sys.time()
+  #   time.taken <- end.time - start.time
+  #   time.taken
+  #   return(one_point_crossing_sons)
   one_point_crossing_sons = data.frame()
   i = 1
   while(i<=new_pairs_of_individuals){
@@ -192,23 +241,33 @@ mutation = function(data,type_function,type_mutation,taxa_mutacao){
 
 
 tournament_offspring = function(data, iterations){
-#   better_individuals = data.frame()
-#   for(i in 1:iterations){
-#     two_individuals_random = sample(seq(1,nrow(data),by=1),size=2,replace=F)
-#     index_better_individuals = two_individuals_random[which.min(data$fitness[two_individuals_random])]
-#     better_individuals = rbind(better_individuals,data[index_better_individuals,])
-#     data = data[-index_better_individuals,]
-#   }
+  #   data = new_data
+  #   iterations = 30
+  #   start.time <- Sys.time()
+  #   better_individuals = data.frame()
+  #   for(i in 1:iterations){
+  #     two_individuals_random = sample(seq(1,nrow(data),by=1),size=2,replace=F)
+  #     index_better_individuals = two_individuals_random[which.min(data$fitness[two_individuals_random])]
+  #     better_individuals = rbind(better_individuals,data[index_better_individuals,])
+  #     data = data[-index_better_individuals,]
+  #   }
+  #   end.time <- Sys.time()
+  #   time.taken <- end.time - start.time
+  #   time.taken
   better_individuals = data.frame()
   indexs = sample(seq(1,nrow(data),by=1),size=iterations,replace=F)
   fitness = data.frame(matrix(indexs,nrow=iterations/2,ncol=2))
   fitness$col1 = data$fitness[fitness[,1]]
   fitness$col2 = data$fitness[fitness[,2]]
   better_individuals = data[ifelse((fitness$col1 - fitness$col2) > 0,fitness[,2],fitness[,1]),]
+  #   end.time <- Sys.time()
+  #   time.taken <- end.time - start.time
+  #   time.taken
   return(better_individuals)
 }
 
 random_offspring = function(data, iterations){
+  random_individuals = data.frame()
   index_one_individual_random = sample(seq(1,nrow(data),by=1),size=iterations,replace=F)
   random_individuals = rbind(random_individuals,data[index_one_individual_random,])
   return(data[index_one_individual_random,])

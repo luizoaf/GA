@@ -61,11 +61,12 @@ all_fitness = data.frame()
 # }
 execute_algorithm = function(){
   fitness_df = data.frame()
-  foreach(i=1:30) %dopar% {
+  foreach(i=1:1) %dopar% {
     print(paste(experiment,"Iteracao: ",i))
     print(fitness_df)
     source("genetic_algorithm.R")
     fitness_df = rbind(fitness_df,result)
+#     experiments[i] = rep(paste(experiment,1),each=10)
   }
   return(fitness_df)
   
@@ -75,21 +76,21 @@ execute_algorithm = function(){
 
 # Experiment I
 experiment = "Experiment I"
-type_selection = "roulette"
+type_selection = "elitism" # rogerio "roulette" 24.6 min
 type_crossing = "one"
-type_mutation="gaussian" 
-type_offspring = "tournament"
+type_mutation="uniform" 
+type_offspring = "random"
 experiment = paste(experiment,type_selection,type_crossing,type_mutation,type_offspring)
 all_fitness = rbind(all_fitness,execute_algorithm())
-all_fitness$experiment = experiment
+# all_fitness$experiment = experiment
 end.time <- Sys.time()
 time.taken <- end.time - start.time
 time.taken
-write.table(all_fitness,file="Experimento_1_rogerio.csv",sep=";",row.names=F)
+# write.table(all_fitness,file="Experimento_1_rogerio.csv",sep=";",row.names=F)
 # time.taken
 # 
 # start.time <- Sys.time()
-# # Experiment II
+# # # Experiment II
 # experiment = "Experiment II"
 # 
 # type_selection = "roulette"
