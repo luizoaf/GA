@@ -203,11 +203,7 @@ tournament_offspring = function(data, iterations){
 }
 
 random_offspring = function(data, iterations){
-  random_individuals = data.frame()
-  for(i in 1:iterations){
-    index_one_individual_random = sample(seq(1,nrow(data),by=1),size=1)
-    random_individuals = rbind(random_individuals,data[index_one_individual_random,])
-    data = data[-index_one_individual_random,]
-  }
-  return(random_individuals)
+  index_one_individual_random = sample(seq(1,nrow(data),by=1),size=iterations,replace=F)
+  random_individuals = rbind(random_individuals,data[index_one_individual_random,])
+  return(data[index_one_individual_random,])
 }
