@@ -130,7 +130,7 @@ crossing_one_point = function(data,type,new_pairs_of_individuals){
     random_number = runif(1,min = 0, max = 1)
     if(random_number <= taxa_cruzamento){
       
-      point_crossing = sample(1:new_pairs_of_individuals,size=2)
+      point_crossing = sample(1:dimensions,size=2,replace=F)
       point_crossing = point_crossing[order(point_crossing,decreasing=F)]
       elements_for_crossing = sample(1:nrow(data),size=2,replace=F)
       vector_1 = 1:point_crossing[1]
@@ -161,7 +161,7 @@ crossing_two_points = function(data,type,new_pairs_of_individuals){
     
     if(random_number <= taxa_cruzamento){
       
-      point_crossing = sample(1:new_pairs_of_individuals,size=3,,replace=F)
+      point_crossing = sample(1:dimensions,size=3,replace=F)
       point_crossing = point_crossing[order(point_crossing,decreasing=F)]
       elements_for_crossing = sample(1:nrow(data),size=2,replace=F)
       

@@ -50,8 +50,9 @@ type_function ="sphere"
 all_fitness = data.frame()
 execute_algorithm = function(){
   fitness_df = data.frame()
-  for(i in 1:30){
+  for(i in 1:1){
     print(paste(experiment,"Iteracao: ",i))
+    print(fitness_df)
     source("genetic_algorithm.R")
     fitness_df = rbind(fitness_df,result)
   }
@@ -61,7 +62,7 @@ execute_algorithm = function(){
 
 # Experiment I
 experiment = "Experiment I"
-type_selection = "elitism"
+type_selection = "roulette"
 type_crossing = "one"
 type_mutation="gaussian" 
 type_offspring = "tournament"

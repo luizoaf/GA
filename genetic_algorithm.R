@@ -13,11 +13,12 @@ for(i in 1:iteracoes){
   
   # 2 - CROSSING
   if(type_crossing == "one"){
-    new_data =  rbind(new_data,crossing_one_point(data=new_data,type=type_function,new_pairs_of_individuals=17))
+    new_data =  rbind(new_data,crossing_one_point(data=new_data,type=type_function,new_pairs_of_individuals=14))
+#     new_data[order(new_data$fitnes,decreasing=T),]
   }
   
   if (type_crossing == "two"){
-    new_data =   rbind(new_data,crossing_two_points(data=new_data,type=type_function,new_pairs_of_individuals=17))
+    new_data =   rbind(new_data,crossing_two_points(data=new_data,type=type_function,new_pairs_of_individuals=14))
   }
   
   # 3 - MUTATION
@@ -25,22 +26,23 @@ for(i in 1:iteracoes){
     new_data =  (mutation(new_data,type_function,type_mutation,taxa_mutacao))
   }
   #  4- OFFSPRING
-  if(type_offspring == "tournamen"){
+  if(type_offspring == "tournament"){
     new_data = tournament_offspring(data=new_data,iterations=30)
   }
   
   if (type_offspring == "random"){
     new_data = random_offspring(data=new_data,iterations=30)
   }
-
+  
   better_fitness_vector[i] = new_data$fitness[which.min(new_data$fitness)]
   row.names(new_data) = 1:nrow(new_data)
   old_data = new_data
-#   plot(main=paste("Iteration: ",i,"Fitness: ",better_fitness_vector[length(better_fitness_vector)]),better_fitness_vector,type="l",ylab="Fitness",xlab="Iteration")
-  
-#   if(better_fitness_vector[i]==0){
-#     break
-#   }
+  plot(main=paste("Iteration: ",i,"Fitness: ",better_fitness_vector[length(better_fitness_vector)]),better_fitness_vector,type="l",ylab="Fitness",xlab="Iteration")
+  print(new_data)
+  #   print(new_data[which.min(new_data$fitness)])
+  if(better_fitness_vector[i]==0){
+    break
+  }
 }
 
 # configurations = paste("SELECTION:",type_selection,
