@@ -192,13 +192,19 @@ mutation = function(data,type_function,type_mutation,taxa_mutacao){
 
 
 tournament_offspring = function(data, iterations){
+#   better_individuals = data.frame()
+#   for(i in 1:iterations){
+#     two_individuals_random = sample(seq(1,nrow(data),by=1),size=2,replace=F)
+#     index_better_individuals = two_individuals_random[which.min(data$fitness[two_individuals_random])]
+#     better_individuals = rbind(better_individuals,data[index_better_individuals,])
+#     data = data[-index_better_individuals,]
+#   }
   better_individuals = data.frame()
-  for(i in 1:iterations){
-    two_individuals_random = sample(seq(1,nrow(data),by=1),size=2,replace=F)
-    index_better_individuals = two_individuals_random[which.min(data$fitness[two_individuals_random])]
-    better_individuals = rbind(better_individuals,data[index_better_individuals,])
-    data = data[-index_better_individuals,]
-  }
+  indexs = sample(seq(1,nrow(data),by=1),size=iterations,replace=F)
+  fitness = data.frame(matrix(indexs,nrow=iterations/2,ncol=2))
+  fitness$col1 = data$fitness[fitness[,1]]
+  fitness$col2 = data$fitness[fitness[,2]]
+  better_individuals = data[ifelse((fitness$col1 - fitness$col2) > 0,fitness[,2],fitness[,1]),]
   return(better_individuals)
 }
 
